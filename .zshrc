@@ -1,20 +1,32 @@
 export ZSH=$HOME/.oh-my-zsh
+export FZF_BASE=$(where fzf)
 
 ZSH_THEME="risto"
 
-# Uncomment the following line to enable command auto-correction.
-# ENABLE_CORRECTION="true"
+# Not show update prompt
+DISABLE_UPDATE_PROMPT=true
 
-# Uncomment the following line to display red dots whilst waiting for completion.
-# COMPLETION_WAITING_DOTS="true"
+# History management:
+## Addition of the history file
+setopt APPEND_HISTORY
 
-# Uncomment the following line if you want to disable marking untracked files
-# under VCS as dirty. This makes repository status check for large repositories
-# much, much faster.
-# DISABLE_UNTRACKED_FILES_DIRTY="true"
+## Ignore all repetitions of commands
+setopt HIST_IGNORE_ALL_DUPS
 
-# Would you like to use another custom folder than $ZSH/custom?
-# ZSH_CUSTOM=/path/to/new-custom-folder
+## Do not display the string found earlier
+setopt HIST_FIND_NO_DUPS
+
+## Ignore rows if they are duplicates
+setopt HIST_IGNORE_DUPS
+
+## Delete empty lines from history file
+setopt HIST_REDUCE_BLANKS
+
+## Ignore a record starting with a space
+setopt HIST_IGNORE_SPACE
+
+## Do not add history and fc commands to the history
+setopt HIST_NO_STORE
 
 plugins=(
   git
@@ -23,8 +35,6 @@ plugins=(
 )
 
 source $ZSH/oh-my-zsh.sh
-
-export FZF_BASE=$(where fzf)
 
 eval "$(fasd --init posix-alias zsh-hook)"
 
@@ -36,10 +46,6 @@ else
 fi
 
 # Aliases
-alias zshconfig="nano ~/.zshrc"
 alias xo="xdg-open"
 alias vim="nvim"
 
-# OPAM configuration
-. /home/eduucaldas/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
-alias config='/usr/bin/git --git-dir=/home/eduucaldas/.cfg/ --work-tree=/home/eduucaldas'
