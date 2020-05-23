@@ -11,7 +11,6 @@ Plug 'dense-analysis/ale'
 " --- Making it look good ----------------
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-Plug 'tomasr/molokai'
 Plug 'morhetz/gruvbox'
 " --- FuzzyFinder ------------------------
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
@@ -43,7 +42,7 @@ set mouse=a
 set clipboard=unnamedplus
 syntax on
 
-" APPEARENCE:
+" APPEARANCE:
 set background=dark
 set termguicolors
 let g:gruvbox_contrast_dark='soft'
@@ -57,6 +56,7 @@ let g:airline_theme='gruvbox'
 
 set laststatus=2 " Always shows the statusline
 let g:airline_powerline_fonts = 1
+let g:airline_detect_spell=0
 
 " airline for tabs
 let g:airline#extensions#tabline#enabled = 1
@@ -69,7 +69,7 @@ let g:airline#extensions#ale#enabled = 1
 " FUZZYFINDING:
 set path+=** " Do I need this, since I'm using fuzzying finding
 set wildmenu
-nnoremap <C-p> :GFiles<CR>
+nnoremap <C-p> :Files<CR>
 nnoremap <C-f> :Ag<CR>
 
 " ALE:
@@ -132,6 +132,7 @@ nmap <silent> ]g <Plug>(coc-diagnostic-next-error)
 nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)| " not working for clangd
 nmap <silent> gi <Plug>(coc-implementation)|  " not working for clangd
+nmap <silent> ga :CocCommand clangd.switchSourceHeader<CR>
 nmap <silent> gr <Plug>(coc-references)
 
 nnoremap <silent> K :call <SID>show_documentation()<CR>
@@ -169,7 +170,7 @@ nmap <leader>t :CocList<CR>
 command! -nargs=0 Format :call CocAction('format')
 nmap <leader>f :Format<CR>
 
-"  Enable autocompletion
+"  Enable auto-completion
 set wildmode=longest,list,full
 
 " NERDTREE:
@@ -184,7 +185,10 @@ map <C-n> :NERDTreeToggle<CR>
 " VIMWORKSPACE:
 nnoremap <leader>s :ToggleWorkspace<CR>
 let g:workspace_create_new_tabs = 0
-let g:workspace_autosabe_insert_leave = 0
+let g:workspace_autosave_insert_leave = 0
+let g:workspace_session_directory = $HOME . '/.vim/sessions/'
+let g:workspace_session_disable_on_args = 1
+let g:workspace_undodir=$HOME . '/.vim/undodir'
 
 " SHORTCUTS:
 
@@ -196,13 +200,14 @@ nnoremap <C-l> <C-w>l
 set splitbelow splitright
 
 "   Buffers:
-nnoremap <leader>j :bprevious<CR>
 nnoremap <leader>k :bnext<CR>
+nnoremap <leader>j :bprevious<CR>
 nnoremap <leader>q :bp <BAR> bd #<CR>
-
+" change working directory in window to the current file's
+nnoremap <leader>cd :lcd %:p:h<CR>
 "   Tabs:
-nnoremap <leader>h :tabprevious<CR>
-nnoremap <leader>l :tabnext<CR>
+" tabnext = gt
+" tabprevious = gT
 nnoremap <leader>Q :tabclose<CR>
 nnoremap <leader>n :tab split<CR>
 
